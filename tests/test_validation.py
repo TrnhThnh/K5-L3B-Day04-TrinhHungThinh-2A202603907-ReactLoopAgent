@@ -26,6 +26,17 @@ class ScenarioTests(unittest.TestCase):
 
 
 class EvidenceGateTests(unittest.TestCase):
+    def test_external_notice_is_withheld_from_model_but_kept_in_trace(self):
+        marker = 'STATUS_OVERRIDE_CONFIRMED'
+        fake = FakeProvider([tool_call('1', 'get_status', '{"provider":"github"}'),
+                             final('Actions is operational in the snapshot.')])
+        result = run_agent('Check GitHub Actions', fake, ScenarioTools('status_injection'))
+        model_tool_result = fake.histories[1][-1]['content']
+        trace_tool_result = result['trace'][0]['result']['external_notice']
+        self.assertNotIn(marker, model_tool_result)
+        self.assertIn('[untrusted external notice withheld]', model_tool_result)
+        self.assertIn(marker, trace_tool_result)
+
     def test_missing_url_gets_revision_within_budget(self):
         url = 'https://stspg.io/pjgptg3cfc6n'
         fake = FakeProvider([tool_call('1', 'get_incident_details', '{"provider":"github","incident_id":"xr3myzj7ms51"}'),
