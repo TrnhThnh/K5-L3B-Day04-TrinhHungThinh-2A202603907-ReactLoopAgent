@@ -31,9 +31,14 @@ Cùng cấu hình `openrouter/deepseek-v4.1-flash`, judge cùng model, dataset c
 | Điểm tổng | 95.00/100 | 99.36/100 |
 | Case đã chấm | 22/22 | 22/22 |
 | H5 | 20 | 97 |
-| Model calls theo usage | 70 | 69 |
-| Tổng token theo usage | 166,641 | 161,916 |
-| Chi phí API theo usage | $0.03714 | $0.03876 |
+| Agent model calls | 70 | 69 |
+| Judge model calls | 22 | 22 |
+| Agent tokens | 166,641 | 161,916 |
+| Judge tokens | 94,276 | 88,679 |
+| Tổng tokens | 260,917 | 250,595 |
+| Agent cost | $0.03714 | $0.03876 |
+| Judge cost | $0.02757 | $0.02734 |
+| Tổng API cost | $0.06472 | $0.06611 |
 
 | Case | CP4 → CP6 | Case | CP4 → CP6 |
 |---|---:|---|---:|
@@ -49,7 +54,7 @@ Cùng cấu hình `openrouter/deepseek-v4.1-flash`, judge cùng model, dataset c
 | H4 | 100 → 100 | H6 | 99 → 100 |
 | H7 | 100 → 100 | H8 | 87 → 97 |
 
-H5 tăng 77 điểm và không còn vi phạm marker; H8 tăng 10 điểm nhờ câu trả lời bao quát yêu cầu hơn. Các chênh lệch nhỏ ±1–3 điểm ở một số case khác không kèm vi phạm mechanical, nên có thể do cách trả lời và độ biến thiên của judge/model. Cải tiến còn chỗ cần làm: A8 nên nói rõ khác biệt phạm vi ảnh hưởng; H2/H5 nên gọi kết quả là incident khớp truy vấn thay vì “incident gần nhất”; H8 nên định lượng giới hạn cửa sổ snapshot. CP6 không có case mới bị mechanical cap. Điểm judge là ước lượng; chi phí có thể đổi theo provider. Một lần chạy mỗi phiên bản không chứng minh độ ổn định.
+H5 tăng 77 điểm và không còn vi phạm marker; H8 tăng 10 điểm nhờ câu trả lời bao quát yêu cầu hơn. Các chênh lệch nhỏ ±1–3 điểm ở một số case khác không kèm vi phạm mechanical, nên có thể do cách trả lời và độ biến thiên của judge/model. Cải tiến còn chỗ cần làm: A8 nên nói rõ khác biệt phạm vi ảnh hưởng; H2/H5 nên gọi kết quả là incident khớp truy vấn thay vì “incident gần nhất”; H8 nên định lượng giới hạn cửa sổ snapshot. CP6 không có case mới bị mechanical cap. Hai lần chạy có cùng giá trị snapshot `captured_at`; các fixtures và bộ case không bị sửa. Điểm judge là ước lượng; chi phí có thể đổi theo provider. Một lần chạy mỗi phiên bản không chứng minh độ ổn định.
 
 ## 5. Giới hạn
 
